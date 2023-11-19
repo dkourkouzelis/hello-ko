@@ -31,4 +31,4 @@ jobs:
     - name: Publish
       run: KO_DOCKER_REPO=ghcr.io/dkourkouzelis/hello-ko ko publish --bare github.com/dkourkouzelis/hello-ko
     - name: Sign
-      run: COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dkourkouzelis/hello-ko
+      run: COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dkourkouzelis/hello-ko -y
