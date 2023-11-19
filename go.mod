@@ -1,3 +1,3 @@
-module github.com/dlorenc/hello-ko
+module github.com/dkourkouzelis/hello-ko
 
 go 1.17
