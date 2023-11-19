@@ -15,16 +15,20 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: actions/setup-go@v2
       with:
         go-version: 1.17
     - name: setup ko
       run: go install github.com/google/ko@main
     - uses: sigstore/cosign-installer@main
-    - name: login
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    - name:
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish
       run: KO_DOCKER_REPO=ghcr.io/dkourkouzelis/hello-ko ko publish --bare github.com/dkourkouzelis/hello-ko
-    - name:
+    - name: Sign
       run: COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dlorenc/hello-ko
